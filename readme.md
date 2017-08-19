@@ -5,7 +5,7 @@
 ## About
 Game of Life is a cellular automaton devised by Mathematician John Conway. The game consists of a grid of cells, each of which are either alive or dead. The evolution of the cells is entirely determined by the initial pattern. The game requires no user input.
 
-## Rules
+## Rules
 Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:
 
 * Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
