@@ -21,18 +21,21 @@ def wrap_neighbours(neighbours):
 
 
 # Finding Neighbours
-def get_neighbours((c, r)):
+def get_neighbours(cell):
+    (c, r) = cell
     neighbours =  [(c - 1, r - 1), (c, r - 1), (c + 1, r - 1),
                    (c + 1, r),                 (c + 1, r + 1),
                    (c, r + 1), (c - 1, r + 1), (c - 1, r)]
     return wrap_neighbours(neighbours)
 
-def get_live_neighbours(cells, (c, r)):
+def get_live_neighbours(cells, cell):
+    (c, r) = cell
     neighbours = get_neighbours((c, r))
     return [val for val in neighbours if val in cells]
 
-def get_dead_neighbours(cells, (c, r)):
-    neighbours = get_neighbours((c, r))
+def get_dead_neighbours(cells, cell):
+    (c, r) = cell
+    neighbours = get_neighbours(cell)
     return [val for val in neighbours if val not in cells]
 
 
@@ -52,6 +55,8 @@ def born(cells):
     maybe_born = set(sum([ get_dead_neighbours(cells, cell)for cell in cells], []))
     return [cell for cell in maybe_born if comes_alive(cells, cell)]
 
+def next_generation(cells):
+    return surviving(cells) + born(cells)
 
 def main():
 
@@ -69,7 +74,8 @@ def main():
 
         refresh_screen(screen, cells, cell_size, width, height)
         # clock.tick(1)
-        cells = surviving(cells) + born(cells)
+        cells = next_generation(cells)
 
-main()
+if __name__ == '__main__':
+    main()
 
