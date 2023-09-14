@@ -45,7 +45,7 @@ def surviving(cells):
         number_of_live_neighbours = len(get_live_neighbours(cells, cell))
         return number_of_live_neighbours == 2 or number_of_live_neighbours == 3
 
-    return [cell for cell in cells if stays_alive(cells, cell)]
+    return {cell: cells[cell] + 1 for cell in cells if stays_alive(cells, cell)}
 
 def born(cells):
     def comes_alive(cells, cell):
@@ -53,10 +53,13 @@ def born(cells):
         return number_of_live_neighbours == 3
 
     maybe_born = set(sum([ get_dead_neighbours(cells, cell)for cell in cells], []))
-    return [cell for cell in maybe_born if comes_alive(cells, cell)]
+    return {cell: 0 for cell in maybe_born if comes_alive(cells, cell)}
 
 def next_generation(cells):
-    return surviving(cells) + born(cells)
+    next_gen = {}
+    next_gen.update(surviving(cells))
+    next_gen.update(born(cells))
+    return next_gen
 
 def main():
 
@@ -73,7 +76,7 @@ def main():
                 sys.exit()
 
         refresh_screen(screen, cells, cell_size, width, height)
-        # clock.tick(1)
+        clock.tick(1)
         cells = next_generation(cells)
 
 if __name__ == '__main__':
