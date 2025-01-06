@@ -1,18 +1,34 @@
 import sys
+import argparse
 import pygame
 from patterns import random_pattern, glider_pattern
 from screen import refresh_screen
 
 #Options
-columns, rows = 100, 50
-cell_size = 10
+DEFAULT_COLS, DEFAULT_ROWS = 100, 50
+DEFAULT_CELL_SIZE = 10
+DEFAULT_AGING = 0
+
+def get_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", "--cell_size", type=int, default=DEFAULT_CELL_SIZE,
+                        help="The size of a cell within the grid")
+    parser.add_argument("-r", "--rows", type=int, default=DEFAULT_ROWS,
+                        help="The number of rows in the grid")
+    parser.add_argument("-c", "--columns", type=int, default=DEFAULT_COLS,
+                        help="The number of columns in the grid")
+    parser.add_argument("-a", "--aging", type=int, default=DEFAULT_AGING,
+                        help="The number of generations that a living cell survives.  Default is forever.")
+
+    return parser.parse_args()
+
 
 def wrap_neighbour(neighbour):
     (c, r) = neighbour
-    c = 0 if c == columns else c
-    c = columns - 1 if c == -1 else c
-    r = 0 if r == rows else r
-    r = rows - 1 if r == -1 else r
+    c = 0 if c == args.columns else c
+    c = args.columns - 1 if c == -1 else c
+    r = 0 if r == args.rows else r
+    r = args.rows - 1 if r == -1 else r
     return (c, r)
 
 
@@ -45,7 +61,10 @@ def surviving(cells):
         number_of_live_neighbours = len(get_live_neighbours(cells, cell))
         return number_of_live_neighbours == 2 or number_of_live_neighbours == 3
 
-    return {cell: cells[cell] + 1 for cell in cells if stays_alive(cells, cell)}
+    if args.aging == DEFAULT_AGING:
+        return {cell: cells[cell] for cell in cells if stays_alive(cells, cell)}
+    else:
+        return {cell: cells[cell] + 1 for cell in cells if stays_alive(cells, cell)}
 
 def born(cells):
     def comes_alive(cells, cell):
@@ -62,9 +81,8 @@ def next_generation(cells):
     return next_gen
 
 def main():
-
-    width, height = columns * cell_size, rows * cell_size
-    cells = random_pattern(columns, rows)
+    width, height = args.columns * args.cell_size, args.rows * args.cell_size
+    cells = random_pattern(args.columns, args.rows)
 
     pygame.init()
     screen = pygame.display.set_mode((width, height))
@@ -75,10 +93,11 @@ def main():
             if event.type == pygame.QUIT:
                 sys.exit()
 
-        refresh_screen(screen, cells, cell_size, width, height)
+        refresh_screen(screen, cells, args.cell_size, width, height)
         clock.tick(1)
         cells = next_generation(cells)
 
 if __name__ == '__main__':
+    args = get_arguments()
     main()
 

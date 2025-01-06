@@ -13,3 +13,42 @@ Every cell interacts with its eight neighbours, which are the cells that are hor
 
 The initial pattern constitutes the seed of the system. The first generation is created by applying the above rules simultaneously to every cell in the seed—births and deaths occur simultaneously, and the discrete moment at which this happens is sometimes called a tick (in other words, each generation is a pure function of the preceding one). The rules continue to be applied repeatedly to create further generations.
 
+## Implementation
+One non-standard aspect of this implementation is that live cells age. They appear gradually darker the older they get. This behaviour is turned off by default.  Use the aging parameter (-a) to specify a max age for cells.
+
+## Installation
+
+Just clone this repository
+
+```bash
+$ git clone https://github.com/richardadalton/python_game_of_life.git
+```
+
+Create a virtual environment using your preferred method. E.g.
+
+```bash
+$ python3 -m venv .venv
+$ . .venv/bin/activate
+```
+
+Install dependencies
+
+```bash
+$ pip install -r requirements.txt
+```
+
+If there are any problems running the project, try updating to the latest versions of PIP and PyGame.
+
+## Running Python OCR
+
+```bash
+$ python game_of_life.py [-h] [-s CELL_SIZE] [-r ROWS] [-c COLUMNS]
+
+arguments:
+  -h, --help            show this help message and exit
+  -s, --cell_size CELL_SIZE
+                        The size of a cell within the grid
+  -r, --rows ROWS       The number of rows in the grid
+  -c, --columns COLUMNS
+                        The number of columns in the grid
+```

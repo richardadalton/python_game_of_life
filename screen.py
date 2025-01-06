@@ -12,7 +12,7 @@ def draw_grid(screen, width, height, cell_size):
 
 def draw_cells(screen, cell_size, cells):
     for (x, y) in cells:
-        age = 255 - (cells[(x, y)] * 10)
+        age = 250 - (cells[(x, y)] * 10)
         age = age if age > 0 else 0
         age_colour = (age, age, age)
         rectangle = (x * cell_size, y * cell_size, cell_size, cell_size)
