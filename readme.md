@@ -45,10 +45,9 @@ If there are any problems running the project, try updating to the latest versio
 $ python game_of_life.py [-h] [-s CELL_SIZE] [-r ROWS] [-c COLUMNS]
 
 arguments:
-  -h, --help            show this help message and exit
-  -s, --cell_size CELL_SIZE
-                        The size of a cell within the grid
-  -r, --rows ROWS       The number of rows in the grid
-  -c, --columns COLUMNS
-                        The number of columns in the grid
+  -h, --help                  show this help message and exit
+  -s, --cell_size CELL_SIZE   The size of a cell within the grid
+  -r, --rows ROWS             The number of rows in the grid
+  -c, --columns COLUMNS       The number of columns in the grid
+  -a, --aging AGING           The number of generations that a living cell survives, Default is forever
 ```

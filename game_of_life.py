@@ -18,7 +18,7 @@ def get_arguments():
     parser.add_argument("-c", "--columns", type=int, default=DEFAULT_COLS,
                         help="The number of columns in the grid")
     parser.add_argument("-a", "--aging", type=int, default=DEFAULT_AGING,
-                        help="The number of generations that a living cell survives.  Default is forever.")
+                        help="The number of generations that a living cell survives, default is forever")
 
     return parser.parse_args()
 
